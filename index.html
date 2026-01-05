@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zaya & Ryan - Restaurant & Sport Lounge</title>
+    <title>Zaya & Ryan's - Restaurant & Sport Lounge</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -73,10 +74,315 @@
             text-transform: uppercase;
         }
 
+        /* Top Right Ribbon Navigation */
+        .ribbon-nav {
+            position: fixed;
+            top: 80px;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .ribbon-link {
+            background: var(--secondary-color);
+            color: var(--primary-color);
+            padding: 0.75rem 1.5rem 0.75rem 1rem;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: -4px 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-radius: 8px 0 0 8px;
+            overflow: hidden;
+            width: 50px;
+        }
+
+        .ribbon-link:hover {
+            width: 150px;
+            background: var(--accent-red);
+            color: white;
+            box-shadow: -8px 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .ribbon-link.active {
+            width: 150px;
+            background: var(--accent-red);
+            color: white;
+        }
+
+        .ribbon-link i {
+            font-size: 1.2rem;
+            min-width: 20px;
+            flex-shrink: 0;
+        }
+
+        .ribbon-link-text {
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .ribbon-link:hover .ribbon-link-text,
+        .ribbon-link.active .ribbon-link-text {
+            opacity: 1;
+        }
+
+        /* Mobile optimizations for ribbon */
+        @media (max-width: 768px) {
+            .ribbon-nav {
+                top: 70px;
+                gap: 0.4rem;
+            }
+
+            .ribbon-link {
+                padding: 0.6rem 1rem 0.6rem 0.8rem;
+                width: 45px;
+                font-size: 0.85rem;
+            }
+
+            .ribbon-link i {
+                font-size: 1.1rem;
+            }
+
+            .ribbon-link:hover,
+            .ribbon-link.active {
+                width: 130px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .ribbon-nav {
+                top: 60px;
+            }
+
+            .ribbon-link {
+                padding: 0.5rem 0.8rem 0.5rem 0.7rem;
+                width: 40px;
+                font-size: 0.8rem;
+            }
+
+            .ribbon-link i {
+                font-size: 1rem;
+            }
+
+            .ribbon-link:hover,
+            .ribbon-link.active {
+                width: 120px;
+            }
+        }
+
+        /* Contact Page */
+        .contact-page {
+            display: none;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .contact-page.active {
+            display: block;
+        }
+
+        .contact-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .contact-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .contact-subtitle {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-card {
+            background: var(--bg-cream);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-icon {
+            font-size: 3rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .contact-label {
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .contact-value {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        .contact-link {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.75rem 2rem;
+            background: var(--secondary-color);
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .contact-link:hover {
+            background: var(--primary-color);
+            color: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        /* Review Page */
+        .review-page {
+            display: none;
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .review-page.active {
+            display: block;
+        }
+
+        .review-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .review-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .review-subtitle {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .review-cta {
+            background: var(--bg-cream);
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .review-cta h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .review-cta p {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .review-button {
+            display: inline-block;
+            padding: 1rem 3rem;
+            background: var(--secondary-color);
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+        }
+
+        .review-button:hover {
+            background: var(--primary-color);
+            color: var(--secondary-color);
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.5);
+        }
+
+        .review-button i {
+            margin-right: 0.5rem;
+        }
+
+        .close-page-btn {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.75rem 2rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+        }
+
+        .close-page-btn:hover {
+            background: var(--accent-red);
+            transform: translateX(-5px);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem 1rem;
+            padding: 1.5rem 1rem;
         }
 
         .breadcrumb {
@@ -106,8 +412,8 @@
 
         .categories-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
             margin-bottom: 2rem;
         }
 
@@ -181,8 +487,8 @@
 
         .menu-items-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
         }
 
         .menu-item-card {
@@ -317,13 +623,92 @@
                 font-size: 2rem;
             }
 
+            /* KEEP TWO COLUMNS ON MOBILE */
             .categories-grid,
             .menu-items-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
             }
 
             .section-title {
                 font-size: 1.8rem;
+            }
+            
+            .category-image-wrapper {
+                height: 140px;
+            }
+            
+            .menu-item-image-wrapper {
+                height: 180px;
+            }
+
+            .contact-page,
+            .review-page {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+
+            .contact-title,
+            .review-title {
+                font-size: 2rem;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.2rem;
+            }
+            
+            .menu-items-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .restaurant-name {
+                font-size: 1.8rem;
+                letter-spacing: 2px;
+            }
+            
+            .restaurant-subtitle {
+                font-size: 0.85rem;
+                letter-spacing: 2px;
+            }
+            
+            .header {
+                padding: 1.5rem 1rem;
+            }
+            
+            .category-name,
+            .menu-item-name {
+                font-size: 1.2rem;
+            }
+            
+            .category-image-wrapper {
+                height: 160px;
+            }
+            
+            .menu-item-image-wrapper {
+                height: 180px;
+            }
+            
+            .menu-item-description {
+                font-size: 0.85rem;
+            }
+            
+            .container {
+                padding: 1rem 0.75rem;
+            }
+            
+            .categories-grid,
+            .menu-items-grid {
+                gap: 0.75rem;
             }
         }
 
@@ -338,10 +723,114 @@
 <body>
     <header class="header">
         <div class="header-content">
-            <h1 class="restaurant-name">Zaya & Ryan</h1>
+            <h1 class="restaurant-name">Zaya & Ryan's</h1>
             <p class="restaurant-subtitle">Restaurant & Sport Lounge</p>
         </div>
     </header>
+
+    <!-- Ribbon Navigation -->
+    <div class="ribbon-nav">
+        <a href="#" class="ribbon-link" onclick="showContact(event)">
+            <i class="fas fa-phone"></i>
+            <span class="ribbon-link-text">Contact</span>
+        </a>
+        <a href="#" class="ribbon-link" onclick="showReviews(event)">
+            <i class="fas fa-star"></i>
+            <span class="ribbon-link-text">Reviews</span>
+        </a>
+    </div>
+
+    <!-- Contact Page -->
+    <div class="contact-page" id="contactPage">
+        <div class="contact-header">
+            <h2 class="contact-title">Get In Touch</h2>
+            <p class="contact-subtitle">We'd love to hear from you!</p>
+        </div>
+
+        <div class="contact-grid">
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fas fa-phone-alt"></i>
+                </div>
+                <div class="contact-label">Phone</div>
+                <div class="contact-value">+234 XXX XXX XXXX</div>
+                <a href="tel:+234XXXXXXXXXX" class="contact-link">
+                    <i class="fas fa-phone"></i> Call Us
+                </a>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+                <div class="contact-label">WhatsApp</div>
+                <div class="contact-value">Message us anytime</div>
+                <a href="https://wa.me/234XXXXXXXXXX" target="_blank" class="contact-link">
+                    <i class="fab fa-whatsapp"></i> Chat Now
+                </a>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="contact-label">Email</div>
+                <div class="contact-value">info@zayaryans.com</div>
+                <a href="mailto:info@zayaryans.com" class="contact-link">
+                    <i class="fas fa-envelope"></i> Email Us
+                </a>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fab fa-instagram"></i>
+                </div>
+                <div class="contact-label">Instagram</div>
+                <div class="contact-value">@zayaryans</div>
+                <a href="https://instagram.com/zayaryans" target="_blank" class="contact-link">
+                    <i class="fab fa-instagram"></i> Follow Us
+                </a>
+            </div>
+        </div>
+
+        <div style="text-align: center;">
+            <button class="close-page-btn" onclick="closePages()">
+                <i class="fas fa-arrow-left"></i> Back to Menu
+            </button>
+        </div>
+    </div>
+
+    <!-- Review Page -->
+    <div class="review-page" id="reviewPage">
+        <div class="review-header">
+            <h2 class="review-title">Leave Us a Review</h2>
+            <p class="review-subtitle">Your feedback helps us serve you better!</p>
+        </div>
+
+        <div class="review-cta">
+            <h3>Share Your Experience</h3>
+            <p>We value your opinion! Click the button below to leave a Google review and let us know how we're doing.</p>
+            <a href="https://g.page/r/YOUR_GOOGLE_REVIEW_LINK/review" target="_blank" class="review-button">
+                <i class="fab fa-google"></i> Write a Google Review
+            </a>
+        </div>
+
+        <div style="background: var(--bg-cream); padding: 2rem; border-radius: 12px; margin-top: 2rem;">
+            <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; margin-bottom: 1rem; text-align: center;">Why Your Review Matters</h3>
+            <ul style="color: var(--text-light); font-size: 1rem; line-height: 2; padding-left: 2rem;">
+                <li>Helps us improve our service</li>
+                <li>Guides other customers in making choices</li>
+                <li>Shows us what we're doing right</li>
+                <li>Builds trust in our community</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center;">
+            <button class="close-page-btn" onclick="closePages()">
+                <i class="fas fa-arrow-left"></i> Back to Menu
+            </button>
+        </div>
+    </div>
 
     <div class="container">
         <div id="breadcrumb" class="breadcrumb hidden">
@@ -371,7 +860,7 @@
     </div>
 
     <script>
-        // Complete menu data from Zaya & Ryan PDF
+        // Complete menu data from Zack & Ryans PDF
         const menuData = {
             categories: [
                 {
@@ -799,7 +1288,7 @@
                         name: 'Purple Rain Coleslaw',
                         description: 'Red cabbage, sweet corn, carrot, MYO dressing',
                         price: '8,000',
-                        image: 'https://images.unsplash.com/photo-1600555379765-f82335a696e0?w=800&q=80'
+                        image: 'https://images.unsplash.com/photo-1612970877932-a3e1d3d7f690?w=800&q=80'
                     },
                     {
                         name: 'Cocktail Salad',
@@ -1607,7 +2096,7 @@
                         name: 'Pineapple Sunrise',
                         description: 'Pineapple fresh juice, pomegranate syrup',
                         price: '12,000',
-                        image: 'https://images.unsplash.com/photo-1619604395920-a16f33192a50?q=80&w=871&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D=80'
+                        image: 'https://drive.google.com/file/d/1T6Rj7II-MhvdrW9eEoHS1I4DR5b--Qyl/view?usp=sharing=80'
                     },
                     {
                         name: 'Cole Busby',
@@ -1619,19 +2108,19 @@
                         name: 'Very Very Strawberry',
                         description: 'Strawberry puree, fresh strawberry, vanilla syrup, simple syrup',
                         price: '12,000',
-                        image: 'https://images.unsplash.com/photo-1573500883495-6c9b16d88d8c?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D=80'
+                        image: 'https://drive.google.com/file/d/187K6yony_NL2cnG5kZ8EWcaEzOOk7rdt/view?usp=sharing=80'
                     },
                     {
                         name: 'Cucumber Spritz',
                         description: 'Cucumber, elderflower, lemon, sparkling wine (non-alcoholic)',
                         price: '12,000',
-                        image: 'https://images.unsplash.com/photo-1630946082770-512616e60aec?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D=80'
+                        image: 'https://drive.google.com/file/d/1A0G7c6Nm6JT2K-gBE0hRS5QmbXySs9Cq/view?usp=sharing=80'
                     },
                     {
                         name: 'Lemonade',
                         description: 'Lemon, sugar and soda',
                         price: '12,000',
-                        image: 'https://images.unsplash.com/photo-1523677011781-c91d1bbe2f9e?q=80&w=393&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D=80'
+                        image: 'https://drive.google.com/file/d/1suStLNJKuZ_FaegQoAkAGGFrXdfpuUmW/view?usp=sharing=80'
                     },
                     {
                         name: 'Passion Sparklers',
@@ -1805,6 +2294,76 @@
             } else if (currentCategory) {
                 showCategories();
             }
+        }
+
+        // Functions for Contact and Review Pages
+        function showContact(event) {
+            event.preventDefault();
+            
+            // Toggle active class on button
+            const contactBtn = event.currentTarget;
+            contactBtn.classList.add('active');
+            
+            // Remove active from review button
+            document.querySelectorAll('.ribbon-link').forEach(btn => {
+                if (btn !== contactBtn) btn.classList.remove('active');
+            });
+            
+            // Hide menu sections
+            document.getElementById('categoriesView').classList.add('hidden');
+            document.getElementById('subCategoriesView').classList.add('hidden');
+            document.getElementById('menuItemsView').classList.add('hidden');
+            document.getElementById('breadcrumb').classList.add('hidden');
+            
+            // Hide review page and show contact page
+            document.getElementById('reviewPage').classList.remove('active');
+            document.getElementById('contactPage').classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showReviews(event) {
+            event.preventDefault();
+            
+            // Toggle active class on button
+            const reviewBtn = event.currentTarget;
+            reviewBtn.classList.add('active');
+            
+            // Remove active from contact button
+            document.querySelectorAll('.ribbon-link').forEach(btn => {
+                if (btn !== reviewBtn) btn.classList.remove('active');
+            });
+            
+            // Hide menu sections
+            document.getElementById('categoriesView').classList.add('hidden');
+            document.getElementById('subCategoriesView').classList.add('hidden');
+            document.getElementById('menuItemsView').classList.add('hidden');
+            document.getElementById('breadcrumb').classList.add('hidden');
+            
+            // Hide contact page and show review page
+            document.getElementById('contactPage').classList.remove('active');
+            document.getElementById('reviewPage').classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function closePages() {
+            // Remove active class from all ribbon buttons
+            document.querySelectorAll('.ribbon-link').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Hide both pages
+            document.getElementById('contactPage').classList.remove('active');
+            document.getElementById('reviewPage').classList.remove('active');
+            
+            // Show menu
+            showCategories();
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         init();
